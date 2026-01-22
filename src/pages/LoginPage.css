@@ -1,0 +1,70 @@
+/* Full page background */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Card container */
+.login-card {
+  width: 360px;
+  padding: 2rem;
+  border-radius: 16px;
+  background-color: #0f0f14;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
+  text-align: center;
+}
+
+/* Title */
+.login-title {
+  margin-bottom: 0.5rem;
+  letter-spacing: 1px;
+  font-size: 2rem;
+  color: white;
+}
+
+/* Subtitle */
+.login-subtitle {
+  margin-bottom: 2rem;
+  opacity: 0.7;
+  color: white;
+}
+
+/* Inputs */
+.login-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+/* Button */
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.login-button:hover {
+  opacity: 0.9;
+}
+
+/* Footer text */
+.login-footer {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  opacity: 0.6;
+  color: white;
+}
