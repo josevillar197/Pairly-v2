@@ -8,18 +8,14 @@ function LoginPage() {
   return (
     <div className="login-page">
       <div className="login-card">
-        <h1 className="login-title">Pairly</h1>
-
-        <p className="login-subtitle">
-          Match by taste, not swipes
-        </p>
+        <h1>Pairly</h1>
+        <p className="subtitle">Match by taste, not swipes</p>
 
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="login-input"
         />
 
         <input
@@ -27,16 +23,11 @@ function LoginPage() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="login-input"
         />
 
-        <button className="login-button">
-          Log in
-        </button>
+        <button>Log in</button>
 
-        <p className="login-footer">
-          New here? Create an account
-        </p>
+        <p className="footer-text">New here? Create an account</p>
       </div>
     </div>
   );
