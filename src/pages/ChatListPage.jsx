@@ -6,30 +6,26 @@ import api from "../services/api";
 function ChatListPage() {
   const { user, isLoading: authLoading } = useContext(AuthContext);
 
-  const [likes, setLikes] = useState([]);
+  const [chats, setChats] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     if (authLoading) return;
 
-    const loadLikes = async () => {
-      setError("");
+    const loadChats = async () => {
       setLoading(true);
-
       try {
         const res = await api.get("/api/chats");
-        setLikes(res.data);
+        setChats(res.data);
       } catch (err) {
         console.log(err);
-        setLikes([]);
-        setError("");
+        setChats([]);
       } finally {
         setLoading(false);
       }
     };
 
-    if (user) loadLikes();
+    if (user) loadChats();
     else setLoading(false);
   }, [authLoading, user]);
 
