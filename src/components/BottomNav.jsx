@@ -1,11 +1,24 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
 
 function BottomNav() {
   return (
     <nav className="bottom-nav">
-      <Link to="/discover">Discover</Link>
-      <Link to="/matches">Matches</Link>
-      <Link to="/profile">Profile</Link>
+      <NavLink to="/discover" className={({ isActive }) => isActive ? "active" : ""}>
+        Discover
+      </NavLink>
+
+      <NavLink to="/matches" className={({ isActive }) => isActive ? "active" : ""}>
+        Matches
+      </NavLink>
+
+      <NavLink to="/chats" className={({ isActive }) => isActive ? "active" : ""}>
+        Chats
+      </NavLink>
+
+      <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
+        Profile
+      </NavLink>
     </nav>
   );
 }

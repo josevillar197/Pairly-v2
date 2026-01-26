@@ -1,12 +1,16 @@
-function MatchCard() {
+import LikeButton from "./LikeButton";
+
+function MatchCard({ tasteItem, isLiked, onLike, onUnlike }) {
   return (
     <div className="match-card">
-      <div className="match-photo" />
+      <h3>{tasteItem.name}</h3>
+      <p>{tasteItem.category}</p>
 
-      <div className="match-info">
-        <h2>Alex</h2>
-        <p>🎬 Movies · 🎮 Gaming · 🎵 Music</p>
-      </div>
+      {isLiked ? (
+        <button onClick={onUnlike}>💔 Unlike</button>
+      ) : (
+        <LikeButton onLike={onLike} />
+      )}
     </div>
   );
 }
