@@ -39,7 +39,7 @@ function ChatListPage() {
       {chats.length === 0 ? (
         <div>
           <p>No chats yet.</p>
-          <Link to="/DiscoveryPage">
+          <Link to="../discover">
             <button>Go to Discovery</button>
           </Link>
         </div>
