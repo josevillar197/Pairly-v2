@@ -5,42 +5,57 @@ import { getTasteItems, addUserTaste } from "../services/api";
 function SignupTastesPage() {
   const [groupedTastes, setGroupedTastes] = useState({});
   const [selected, setSelected] = useState([]);
+  const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     getTasteItems()
       .then((data) => {
-        const flattenedTastes = data[0]?.tasteItems || [];
+        const tastes = data[0]?.tasteItems || [];
 
-        const grouped = flattenedTastes.reduce((acc, taste) => {
-          if (!acc[taste.type]) {
-            acc[taste.type] = [];
-          }
+        const grouped = tastes.reduce((acc, taste) => {
+          if (!acc[taste.type]) acc[taste.type] = [];
           acc[taste.type].push(taste);
           return acc;
         }, {});
 
         setGroupedTastes(grouped);
       })
-      .catch((err) => {
-        console.error("FAILED TO FETCH TASTES", err);
+      .catch(() => {
+        alert("Failed to load tastes");
       });
   }, []);
 
   const toggleTaste = (id) => {
     setSelected((prev) =>
-      prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]
+      prev.includes(id)
+        ? prev.filter((t) => t !== id)
+        : [...prev, id]
     );
   };
 
   const handleContinue = async () => {
+    if (selected.length === 0) {
+      alert("Select at least one taste");
+      return;
+    }
+
+    setSaving(true);
+
     try {
       for (const tasteId of selected) {
+        if (typeof tasteId !== "string") {
+          throw new Error("Invalid taste id");
+        }
         await addUserTaste(tasteId);
       }
+
       navigate("/discover");
-    } catch {
+    } catch (err) {
+      console.error("SAVE TASTES ERROR:", err);
       alert("Failed to save tastes");
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -52,37 +67,38 @@ function SignupTastesPage() {
           Pick what you actually enjoy — this drives your matches
         </p>
 
-        <div className="taste-groups">
-          {Object.entries(groupedTastes).map(([type, items]) => (
-            <div key={type} className="taste-group">
-              <h3 className="taste-group-title">
-                {type === "movie" && "Movies"}
-                {type === "show" && "TV Shows"}
-                {type === "game" && "Games"}
-                {type === "artist" && "Music"}
-              </h3>
+        {Object.entries(groupedTastes).map(([type, tastes]) => (
+          <div key={type} className="taste-category">
+            <h2 className="taste-category-title">
+              {type.toUpperCase()}
+            </h2>
 
-              <div className="taste-grid">
-                {items.map((taste) => (
-                  <button
-                    key={taste._id}
-                    className={
-                      selected.includes(taste._id)
-                        ? "taste selected"
-                        : "taste"
-                    }
-                    onClick={() => toggleTaste(taste._id)}
-                  >
-                    {taste.name}
-                  </button>
-                ))}
-              </div>
+            <div className="taste-grid">
+              {tastes.map((taste) => (
+                <button
+                  key={taste._id}
+                  type="button"
+                  className={
+                    selected.includes(taste._id)
+                      ? "taste selected"
+                      : "taste"
+                  }
+                  onClick={() => toggleTaste(taste._id)}
+                >
+                  {taste.name}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
 
-        <button className="primary" onClick={handleContinue}>
-          Continue
+        <button
+          type="button"
+          className="primary-button"
+          onClick={handleContinue}
+          disabled={saving}
+        >
+          {saving ? "Saving..." : "Continue"}
         </button>
       </div>
     </div>
