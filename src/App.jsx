@@ -38,7 +38,6 @@ function App() {
         <Route path="/signup/tastes" element={<SignupTastesPage />} />
         <Route path="/discover" element={<DiscoveryPage />} />
         <Route path="/matches" element={<MatchesPage />} />
-        <Route path="/chats" element={<ChatListPage />} />
         <Route path="/chats/:id" element={<ChatRoomPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/users/:id" element={<UsersDetailsPage />} />

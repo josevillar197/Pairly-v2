@@ -5,6 +5,7 @@ import { getMyMatches } from "../services/api";
 function MatchesPage() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,6 +16,23 @@ function MatchesPage() {
       })
       .finally(() => setLoading(false));
   }, []);
+
+  const handleUnmatch = async (userId) => {
+    try {
+      await fetch(`http://localhost:5005/api/user-likes/${userId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
+
+      setMatches((prev) =>
+        prev.filter((m) => m.otherUser._id !== userId)
+      );
+    } catch {
+      alert("Failed to unmatch");
+    }
+  };
 
   if (loading) {
     return (
@@ -33,37 +51,62 @@ function MatchesPage() {
 
       <div className="card-list">
         {matches.map((match) => (
-          <div
-            key={match._id}
-            className="card discover-card"
-            onClick={() =>
-              navigate(`/users/${match.otherUser._id}`)
-            }
-            style={{ cursor: "pointer" }}
-          >
+          <div key={match._id} className="match-card-horizontal">
+            
             <img
               src={match.otherUser.image}
               alt={match.otherUser.name}
-              className="discover-avatar"
+              className="match-avatar-large"
+              onClick={() => navigate(`/users/${match.otherUser._id}`)}
             />
 
-            <div className="discover-info">
+            <div className="match-details">
               <h3>
                 {match.otherUser.name}
                 {match.otherUser.age && (
-                  <span className="discover-age">
-                    {" "}
-                    · {match.otherUser.age}
-                  </span>
+                  <span className="discover-age"> · {match.otherUser.age}</span>
                 )}
               </h3>
 
               {match.otherUser.bio && (
-                <p className="discover-bio">
-                  {match.otherUser.bio}
-                </p>
+                <p className="discover-bio">{match.otherUser.bio}</p>
               )}
             </div>
+
+            <div className="match-menu">
+              <button
+                onClick={() =>
+                  setMenuOpen(menuOpen === match._id ? null : match._id)
+                }
+                className="menu-btn"
+              >
+                ⋯
+              </button>
+
+              {menuOpen === match._id && (
+                <div className="menu-dropdown">
+                  <button
+                    onClick={() =>
+                      navigate(`/users/${match.otherUser._id}`)
+                    }
+                  >
+                    View profile
+                  </button>
+
+                  <button disabled style={{ opacity: 0.4 }}>
+                    Chat (soon)
+                  </button>
+
+                  <button
+                    onClick={() => handleUnmatch(match.otherUser._id)}
+                    className="danger"
+                  >
+                    Unmatch
+                  </button>
+                </div>
+              )}
+            </div>
+
           </div>
         ))}
       </div>

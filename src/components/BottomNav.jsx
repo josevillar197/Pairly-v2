@@ -16,10 +16,6 @@ function BottomNav() {
         Liked
       </NavLink>
 
-      <NavLink to="/chats" className={({ isActive }) => isActive ? "active" : ""}>
-        Chats
-      </NavLink>
-
       <NavLink to="/profile" className={({ isActive }) => isActive ? "active" : ""}>
         Profile
       </NavLink>
