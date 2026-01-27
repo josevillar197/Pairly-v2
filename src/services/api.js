@@ -135,3 +135,19 @@ export function updateUserProfile(profileData) {
   });
 }
 
+export function getSentLikes() {
+  return authFetch(`${API_URL}/user-likes/sent/me`).then((res) => {
+    if (!res.ok) throw new Error("Failed to fetch sent likes");
+    return res.json();
+  });
+}
+
+export function likeUser(userId) {
+  return authFetch(`${API_URL}/user-likes/${userId}`, {
+    method: "POST",
+  }).then((res) => {
+    if (!res.ok) throw new Error("Failed to like user");
+    return res.json();
+  });
+}
+

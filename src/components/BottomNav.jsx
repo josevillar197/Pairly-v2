@@ -12,6 +12,10 @@ function BottomNav() {
         Matches
       </NavLink>
 
+      <NavLink to="/liked" className={({ isActive }) => isActive ? "active" : ""}>
+        Liked
+      </NavLink>
+
       <NavLink to="/chats" className={({ isActive }) => isActive ? "active" : ""}>
         Chats
       </NavLink>

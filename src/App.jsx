@@ -14,6 +14,8 @@ import UsersDetailsPage from "./pages/UsersDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignupTasteStepPage from "./pages/SignupTasteStepPage";
 import SignupProfilePage from "./pages/SignupProfilePage";
+import LikedPage from "./pages/LikedPage";
+
 
 
 import BottomNav from "./components/BottomNav";
@@ -46,6 +48,8 @@ function App() {
 <Route path="/signup/tastes/game" element={<SignupTasteStepPage />} />
 <Route path="/signup/tastes/artist" element={<SignupTasteStepPage />} />
 <Route path="/signup/profile" element={<SignupProfilePage />} />
+<Route path="/liked" element={<LikedPage />} />
+
 
 
       </Routes>
