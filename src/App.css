@@ -1,32 +1,37 @@
 /* =========================
-   GLOBAL
+   GLOBAL RESET
 ========================= */
-
-
 
 * {
   box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
 }
 
 body {
   margin: 0;
   background: linear-gradient(135deg, #1e1e2f, #2a2a40);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: white;
 }
 
 .app {
   min-height: 100vh;
-  padding-bottom: 64px;
+  padding-bottom: 64px; /* space for bottom nav */
 }
 
 .page {
   min-height: 100vh;
   padding: 1.5rem;
-  color: white;
 }
 
 /* =========================
-   BOTTOM NAV
+   BOTTOM NAV (RESTORED)
 ========================= */
 
 .bottom-nav {
@@ -54,9 +59,8 @@ body {
   font-weight: 600;
 }
 
-
 /* =========================
-   DISCOVER + GENERIC CARDS
+   DISCOVER / GENERIC CARDS
 ========================= */
 
 .card-list {
@@ -130,8 +134,42 @@ body {
   flex: 1;
 }
 
+.match-menu {
+  position: relative;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  background: #141422;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  padding: 6px;
+  z-index: 20;
+}
+
+.menu-dropdown button {
+  display: block;
+  background: none;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
 /* =========================
-   USER DETAILS PAGE (FINAL)
+   USER DETAILS PAGE
 ========================= */
 
 .user-details-page {
@@ -147,7 +185,6 @@ body {
   align-items: center;
 }
 
-/* Back button */
 .profile-back-btn {
   align-self: flex-start;
   margin-bottom: 24px;
@@ -160,7 +197,6 @@ body {
   font-size: 0.85rem;
 }
 
-/* Header */
 .user-details-header {
   display: flex;
   flex-direction: column;
@@ -178,14 +214,8 @@ body {
   background: #2a2a3d;
 }
 
-.user-details-header h1 {
-  margin: 0;
-  font-size: 1.6rem;
-}
-
 .user-age {
   color: #9a9ab5;
-  font-size: 1rem;
 }
 
 .user-bio {
@@ -196,7 +226,6 @@ body {
   color: #b3b3c6;
 }
 
-/* Match badge */
 .match-badge {
   margin-top: 10px;
   padding: 6px 14px;
@@ -207,7 +236,7 @@ body {
 }
 
 /* =========================
-   TASTES (NO CARD, CENTERED)
+   TASTES (PILLS)
 ========================= */
 
 .user-tastes-section {
@@ -251,37 +280,243 @@ body {
 .taste-pill.shared {
   background: rgba(108, 92, 255, 0.25);
   color: #cfcaff;
-  font-weight: 500;
 }
-.match-menu {
+
+/* =========================
+   MATCH ALERT
+========================= */
+
+.match-alert {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #1e1e2f;
+  border: 1px solid #5c5cff;
+  padding: 10px 14px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10000;
+}
+
+.match-alert img {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* =========================
+   PROFILE PAGE (FORM LAYOUT)
+========================= */
+
+.profile-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.profile-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.profile-menu-wrapper {
   position: relative;
 }
 
-.menu-btn {
+.profile-menu-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: white;
+}
+
+.profile-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 32px;
+  background: #141422;
+  border: 1px solid #2a2a3d;
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 140px;
+  z-index: 30;
+}
+
+.profile-menu-item {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 8px 10px;
+  text-align: left;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-menu-item.danger {
+  color: #ff6b6b;
+}
+
+.profile-form-layout {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.profile-avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #2a2a3d;
+}
+
+.profile-fields-column label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.profile-fields-column input {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #2a2a3d;
+  color: white;
+}
+
+.profile-bio-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.profile-bio-label textarea {
+  min-height: 140px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #2a2a3d;
+  border: none;
+  color: white;
+  resize: vertical;
+}
+
+.profile-save-btn {
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: none;
+  background: #5c5cff;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s ease, opacity 0.15s ease;
+}
+.profile-save-btn:hover {
+  opacity: 0.9;
+}
+
+.profile-save-btn:active {
+  transform: scale(0.97);
+}
+
+.profile-save-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.profile-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 720px;
+  margin: 0 auto 24px auto;
+  padding: 0 4px;
+}
+
+
+
+.profile-top-bar h1 {
+  margin: 0;
+}
+
+
+.profile-menu-wrapper {
+  margin-left: auto;
+  position: relative;
+}
+
+.profile-menu-wrapper {
+  position: relative;
+}
+
+.profile-menu-btn {
   background: none;
   border: none;
   font-size: 22px;
   color: white;
   cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
 }
 
-.menu-dropdown {
+.profile-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Dropdown container */
+.profile-menu-dropdown {
   position: absolute;
   right: 0;
-  top: 28px;
-  background: #111;
-  border: 1px solid #333;
-  border-radius: 10px;
+  top: 36px;
+
+  min-width: 160px;
   padding: 6px;
-  z-index: 10;
+
+  background: #1e1e2f;
+  border: 1px solid #2a2a3d;
+  border-radius: 12px;
+
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+  z-index: 50;
 }
 
-.menu-dropdown button {
-  display: block;
+/* Menu items */
+.profile-menu-dropdown button {
+  width: 100%;
   background: none;
   border: none;
-  color: white;
-  padding: 6px 10px;
-  width: 100%;
+
+  padding: 10px 12px;
+  border-radius: 8px;
+
   text-align: left;
+  font-size: 14px;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-menu-dropdown button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Destructive action */
+.profile-menu-dropdown .danger {
+  color: #ff6b6b;
+}
+
+.profile-menu-dropdown .danger:hover {
+  background: rgba(255, 107, 107, 0.15);
+}
+.profile-saved {
+  margin-top: 8px;
+  color: #7dff9a;
+  font-size: 0.9rem;
 }
