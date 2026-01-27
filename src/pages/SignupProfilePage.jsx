@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { updateUserProfile } from "../services/api";
+import { AuthContext } from "../context/AuthContext";
 
 function SignupProfilePage() {
   const [age, setAge] = useState("");
@@ -9,6 +10,7 @@ function SignupProfilePage() {
   const [saving, setSaving] = useState(false);
 
   const navigate = useNavigate();
+  const { authenticateUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,10 +26,12 @@ function SignupProfilePage() {
       await updateUserProfile({
         age: Number(age),
         bio,
-        image
+        image,
       });
 
-      navigate("/discover");
+      await authenticateUser();
+navigate("/discover");
+
     } catch (err) {
       alert("Failed to save profile");
     } finally {
@@ -37,47 +41,60 @@ function SignupProfilePage() {
 
   return (
     <div className="signup-page">
-  <div className="signup-content profile-step">
-    <h1>Complete your profile</h1>
+      <div className="signup-content profile-step">
+        <h1>Complete your profile</h1>
 
-    <form onSubmit={handleSubmit} className="profile-form">
-      <input
-        type="number"
-        placeholder="Age"
-        value={age}
-        onChange={(e) => setAge(e.target.value)}
-        min="18"
-        required
-        className="profile-input"
-      />
+        <form onSubmit={handleSubmit} className="profile-form">
+          <input
+            type="number"
+            placeholder="Age"
+            value={age}
+            onChange={(e) => setAge(e.target.value)}
+            min="18"
+            required
+            className="profile-input"
+          />
 
-      <textarea
-        placeholder="Short bio"
-        value={bio}
-        onChange={(e) => setBio(e.target.value)}
-        maxLength={300}
-        className="profile-textarea"
-      />
+          <textarea
+            placeholder="Short bio"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+            maxLength={300}
+            className="profile-textarea"
+          />
 
-      <input
-        type="text"
-        placeholder="Profile image URL"
-        value={image}
-        onChange={(e) => setImage(e.target.value)}
-        className="profile-input"
-      />
+          <input
+            type="text"
+            placeholder="Profile image URL"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+            className="profile-input"
+          />
 
-      <button
-        type="submit"
-        disabled={saving}
-        className="profile-button"
-      >
-        {saving ? "Saving..." : "Continue"}
-      </button>
-    </form>
-  </div>
-</div>
+          {image && (
+            <img
+              src={image}
+              alt="Profile preview"
+              style={{
+                width: "120px",
+                height: "120px",
+                borderRadius: "50%",
+                objectFit: "cover",
+                marginTop: "12px",
+              }}
+            />
+          )}
 
+          <button
+            type="submit"
+            disabled={saving}
+            className="profile-button"
+          >
+            {saving ? "Saving..." : "Continue"}
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 

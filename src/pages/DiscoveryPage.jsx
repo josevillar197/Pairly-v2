@@ -37,12 +37,11 @@ function DiscoveryPage() {
         )}
 
         {users.map((user) => (
-  <div key={user._id} className="card">
-    <h3>{user.name}</h3>
-    <p>{user.email}</p>
-  </div>
-))}
-
+          <div key={user._id} className="card">
+            <h3>{user.name}</h3>
+            <p>{user.email}</p>
+          </div>
+        ))}
       </div>
     </div>
   );

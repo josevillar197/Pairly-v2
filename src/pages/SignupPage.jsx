@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { signup } from "../services/api";
+import { signup, login } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
 
 function SignupPage() {
@@ -15,16 +15,14 @@ function SignupPage() {
     e.preventDefault();
 
     try {
-      const response = await signup(email, password, name);
+      await signup(email, password, name);
 
-console.log("SIGNUP RESPONSE:", response);
-console.log("AUTH TOKEN:", response.authToken);
+      const loginResponse = await login(email, password);
 
-storeToken(response.authToken);
-navigate("/signup/tastes");
+      storeToken(loginResponse.authToken);
+      authenticateUser();
 
-
-
+      navigate("/signup/tastes");
     } catch (err) {
       alert(err.message || "Signup failed");
     }
