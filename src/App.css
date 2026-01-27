@@ -531,5 +531,35 @@ button.primary {
   cursor: not-allowed;
 }
 
+.discover-card {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #1e1e1e;
+  align-items: center;
+}
+
+.discover-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #333;
+}
+
+.discover-info h3 {
+  margin: 0;
+}
+
+.discover-age {
+  font-weight: normal;
+  color: #aaa;
+}
+
+.discover-bio {
+  margin-top: 6px;
+  color: #ccc;
+}
 
 

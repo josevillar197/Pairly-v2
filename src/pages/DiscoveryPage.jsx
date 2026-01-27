@@ -32,14 +32,24 @@ function DiscoveryPage() {
       <h1>Discover</h1>
 
       <div className="card-list">
-        {users.length === 0 && (
-          <p>No users to discover yet.</p>
-        )}
+        {users.length === 0 && <p>No users to discover yet.</p>}
 
         {users.map((user) => (
-          <div key={user._id} className="card">
-            <h3>{user.name}</h3>
-            <p>{user.email}</p>
+          <div key={user._id} className="card discover-card">
+            <img
+              src={user.image}
+              alt={user.name}
+              className="discover-avatar"
+            />
+
+            <div className="discover-info">
+              <h3>
+                {user.name}
+                {user.age && <span className="discover-age"> · {user.age}</span>}
+              </h3>
+
+              {user.bio && <p className="discover-bio">{user.bio}</p>}
+            </div>
           </div>
         ))}
       </div>
