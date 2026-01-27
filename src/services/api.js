@@ -151,3 +151,11 @@ export function likeUser(userId) {
   });
 }
 
+export function getMyMatches() {
+  return authFetch(`${API_URL}/matches/me`)
+    .then(res => {
+      if (!res.ok) throw new Error("Failed to fetch matches");
+      return res.json();
+    });
+}
+

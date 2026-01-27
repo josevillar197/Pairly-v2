@@ -2,26 +2,36 @@ import { useEffect, useState } from "react";
 import {
   getDiscoverUsers,
   getSentLikes,
+  getMyMatches,
   likeUser,
 } from "../services/api";
 
 function DiscoveryPage() {
   const [users, setUsers] = useState([]);
-  const [likedIds, setLikedIds] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Promise.all([getDiscoverUsers(), getSentLikes()])
-      .then(([discoverUsers, sentLikes]) => {
-        const likedUserIds = sentLikes.map((like) => like.toUser);
-        setLikedIds(likedUserIds);
+    Promise.all([
+      getDiscoverUsers(),
+      getSentLikes(),
+      getMyMatches(),
+    ])
+     .then(([discoverUsers, sentLikes, matches]) => {
+  const likedIds = sentLikes.map((l) => l.toUser);
 
-        const filtered = discoverUsers.filter(
-          (u) => !likedUserIds.includes(u._id)
-        );
+  const matchedIds = matches.map(
+    (m) => m.otherUser._id
+  );
 
-        setUsers(filtered);
-      })
+  const excludedIds = [...likedIds, ...matchedIds];
+
+  const filteredUsers = discoverUsers.filter(
+    (u) => !excludedIds.includes(u._id)
+  );
+
+  setUsers(filteredUsers);
+})
+
       .catch((err) => {
         console.error("DISCOVER LOAD ERROR:", err);
       })
@@ -34,7 +44,6 @@ function DiscoveryPage() {
     try {
       await likeUser(userId);
       setUsers((prev) => prev.filter((u) => u._id !== userId));
-      setLikedIds((prev) => [...prev, userId]);
     } catch (err) {
       alert("Failed to like user");
     }
@@ -76,18 +85,36 @@ function DiscoveryPage() {
                 <p className="discover-bio">{user.bio}</p>
               )}
 
-              <button
-                onClick={() => handleLike(user._id)}
-                style={{
-                  marginTop: "12px",
-                  fontSize: "20px",
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                ❤️
-              </button>
+              <div style={{ marginTop: "12px" }}>
+                <button
+                  onClick={() => handleLike(user._id)}
+                  style={{
+                    fontSize: "22px",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    marginRight: "12px",
+                  }}
+                >
+                  ❤️
+                </button>
+
+                <button
+                  onClick={() =>
+                    setUsers((prev) =>
+                      prev.filter((u) => u._id !== user._id)
+                    )
+                  }
+                  style={{
+                    fontSize: "22px",
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  ❌
+                </button>
+              </div>
             </div>
           </div>
         ))}
