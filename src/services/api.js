@@ -124,3 +124,14 @@ export function getDiscoverUsers() {
   });
 }
 
+export function updateUserProfile(profileData) {
+  return authFetch(`${API_URL}/users/profile`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(profileData)
+  }).then((res) => {
+    if (!res.ok) throw new Error("Failed to update profile");
+    return res.json();
+  });
+}
+

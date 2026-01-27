@@ -7,7 +7,7 @@ function SignupTastesPage() {
   const [selected, setSelected] = useState([]);
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
-  
+
 useEffect(() => {
   getTasteItems()
     .then((tastes) => {
@@ -50,7 +50,8 @@ useEffect(() => {
         await addUserTaste(tasteId);
       }
 
-      navigate("/discover");
+      navigate("/signup/profile");
+
     } catch (err) {
       console.error("SAVE TASTES ERROR:", err);
       alert("Failed to save tastes");

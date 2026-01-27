@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import UsersDetailsPage from "./pages/UsersDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignupTasteStepPage from "./pages/SignupTasteStepPage";
+import SignupProfilePage from "./pages/SignupProfilePage";
 
 
 import BottomNav from "./components/BottomNav";
@@ -44,6 +45,8 @@ function App() {
 <Route path="/signup/tastes/show" element={<SignupTasteStepPage />} />
 <Route path="/signup/tastes/game" element={<SignupTasteStepPage />} />
 <Route path="/signup/tastes/artist" element={<SignupTasteStepPage />} />
+<Route path="/signup/profile" element={<SignupProfilePage />} />
+
 
       </Routes>
 
