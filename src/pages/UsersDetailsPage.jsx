@@ -38,17 +38,16 @@ function UsersDetailsPage() {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
     ])
-      .then(([userData, theirTastes, myTastes, matches]) => {
+      .then(([userData, theirTastes, myTastesData, matches]) => {
         setUser(userData);
         setTastes(theirTastes);
-        setMyTastes(myTastes);
+        setMyTastes(myTastesData);
 
         const matched = matches.some((m) =>
           m.users.includes(userData._id)
         );
         setIsMatch(matched);
       })
-      .catch((err) => console.error("PROFILE LOAD ERROR:", err))
       .finally(() => setLoading(false));
   }, [id]);
 
@@ -66,15 +65,11 @@ function UsersDetailsPage() {
 
   return (
     <div className="page user-details-page">
-      <button
-        className="profile-back-btn"
-        onClick={() => navigate(-1)}
-      >
-        ← Back
-      </button>
-
       <div className="user-details-layout">
-        {/* HEADER */}
+        <button className="profile-back-btn" onClick={() => navigate(-1)}>
+          ← Back
+        </button>
+
         <div className="user-details-header">
           <img
             src={user.image}
@@ -87,50 +82,34 @@ function UsersDetailsPage() {
             <span className="user-age"> · {user.age}</span>
           </h1>
 
-          {isMatch && (
-            <span className="match-badge">💜 Match</span>
-          )}
+          {isMatch && <span className="match-badge">💜 Match</span>}
 
-          {user.bio && (
-            <p className="user-bio">{user.bio}</p>
-          )}
+          {user.bio && <p className="user-bio">{user.bio}</p>}
         </div>
 
-        {/* TASTES */}
         <div className="user-tastes-section">
           <h2 className="user-tastes-title">Tastes</h2>
 
-          {Object.entries(groupedTastes).map(
-            ([category, items]) => (
-              <div
-                key={category}
-                className="taste-category"
-              >
-                <div className="taste-category-title">
-                  {CATEGORY_EMOJI[category]}{" "}
-                  {category.toUpperCase()}
-                </div>
-
-                <div className="taste-pill-list">
-                  {items.map((item) => {
-                    const shared =
-                      myTasteIds.includes(item._id);
-
-                    return (
-                      <span
-                        key={item._id}
-                        className={`taste-pill ${
-                          shared ? "shared" : ""
-                        }`}
-                      >
-                        {item.name}
-                      </span>
-                    );
-                  })}
-                </div>
+          {Object.entries(groupedTastes).map(([category, items]) => (
+            <div key={category} className="taste-category">
+              <div className="taste-category-title">
+                {CATEGORY_EMOJI[category]} {category.toUpperCase()}
               </div>
-            )
-          )}
+
+              <div className="taste-pill-list">
+                {items.map((item) => (
+                  <span
+                    key={item._id}
+                    className={`taste-pill ${
+                      myTasteIds.includes(item._id) ? "shared" : ""
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

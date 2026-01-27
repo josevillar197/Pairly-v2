@@ -54,11 +54,6 @@ body {
   font-weight: 600;
 }
 
-@media (min-width: 768px) {
-  .bottom-nav {
-    display: none;
-  }
-}
 
 /* =========================
    DISCOVER + GENERIC CARDS
@@ -257,4 +252,36 @@ body {
   background: rgba(108, 92, 255, 0.25);
   color: #cfcaff;
   font-weight: 500;
+}
+.match-menu {
+  position: relative;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 28px;
+  background: #111;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 6px;
+  z-index: 10;
+}
+
+.menu-dropdown button {
+  display: block;
+  background: none;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  width: 100%;
+  text-align: left;
 }
