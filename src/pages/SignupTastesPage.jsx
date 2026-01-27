@@ -7,24 +7,24 @@ function SignupTastesPage() {
   const [selected, setSelected] = useState([]);
   const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
+  
+useEffect(() => {
+  getTasteItems()
+    .then((tastes) => {
+      const grouped = tastes.reduce((acc, taste) => {
+        if (!acc[taste.category]) acc[taste.category] = [];
+        acc[taste.category].push(taste);
+        return acc;
+      }, {});
 
-  useEffect(() => {
-    getTasteItems()
-      .then((data) => {
-        const tastes = data[0]?.tasteItems || [];
+      setGroupedTastes(grouped);
+    })
+    .catch(() => {
+      alert("Failed to load tastes");
+    });
+}, []);
 
-        const grouped = tastes.reduce((acc, taste) => {
-          if (!acc[taste.type]) acc[taste.type] = [];
-          acc[taste.type].push(taste);
-          return acc;
-        }, {});
 
-        setGroupedTastes(grouped);
-      })
-      .catch(() => {
-        alert("Failed to load tastes");
-      });
-  }, []);
 
   const toggleTaste = (id) => {
     setSelected((prev) =>

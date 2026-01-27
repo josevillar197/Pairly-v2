@@ -115,3 +115,12 @@ export function getChats() {
     return res.json();
   });
 }
+export function getDiscoverUsers() {
+  return authFetch(`${API_URL}/users/discover`).then((res) => {
+    if (!res.ok) {
+      throw new Error("Failed to fetch discover users");
+    }
+    return res.json();
+  });
+}
+

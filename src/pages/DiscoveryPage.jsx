@@ -1,47 +1,48 @@
 import { useEffect, useState } from "react";
-import { addUserTaste } from "../services/api";
-import { getTasteItems } from "../services/api";
-import FilterBar from "../components/FilterBar";
+import { getDiscoverUsers } from "../services/api";
 
 function DiscoveryPage() {
-  const [items, setItems] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getTasteItems()
+    getDiscoverUsers()
       .then((data) => {
-        setItems(data);
+        setUsers(data);
       })
       .catch((err) => {
-        console.error(err);
+        console.error("DISCOVER USERS ERROR:", err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, []);
 
-  const handleLike = (id) => {
-    addUserTaste(id)
-      .then(() => {
-        setItems((prev) => prev.filter((item) => item._id !== id));
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
+  if (loading) {
+    return (
+      <div className="page discover-page">
+        <h1>Discover</h1>
+        <p>Loading users...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="page discover-page">
       <h1>Discover</h1>
-      <FilterBar />
 
       <div className="card-list">
-        {items.map((item) => (
-          <div key={item._id} className="card">
-            <h3>{item.name}</h3>
-            <p>{item.category}</p>
+        {users.length === 0 && (
+          <p>No users to discover yet.</p>
+        )}
 
-            <button onClick={() => handleLike(item._id)}>
-              Like
-            </button>
-          </div>
-        ))}
+        {users.map((user) => (
+  <div key={user._id} className="card">
+    <h3>{user.name}</h3>
+    <p>{user.email}</p>
+  </div>
+))}
+
       </div>
     </div>
   );

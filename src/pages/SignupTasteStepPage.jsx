@@ -21,20 +21,23 @@ function SignupTasteStepPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
+  setLoading(true);
 
-    getTasteItems()
-      .then((data) => {
-        const all = data[0]?.tasteItems || [];
-        setItems(all.filter((t) => t.type === category));
-      })
-      .catch(() => {
-        setItems([]);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, [category]);
+  getTasteItems()
+    .then((data) => {
+      console.log("RAW taste items from API:", data);
+      console.log("Current category param:", category);
+
+      setItems(data.filter((t) => t.category === category));
+    })
+    .catch((err) => {
+      console.error("Taste fetch failed:", err);
+      setItems([]);
+    })
+    .finally(() => {
+      setLoading(false);
+    });
+}, [category]);
 
   const currentIndex = ORDER.indexOf(category);
   const isLast = currentIndex === ORDER.length - 1;

@@ -17,8 +17,13 @@ function SignupPage() {
     try {
       const response = await signup(email, password, name);
 
-      storeToken(response.authToken);
-window.location.href = "/signup/tastes";
+console.log("SIGNUP RESPONSE:", response);
+console.log("AUTH TOKEN:", response.authToken);
+
+storeToken(response.authToken);
+navigate("/signup/tastes");
+
+
 
     } catch (err) {
       alert(err.message || "Signup failed");
