@@ -13,10 +13,14 @@ import ProfilePage from "./pages/ProfilePage";
 import UsersDetailsPage from "./pages/UsersDetailsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import SignupTasteStepPage from "./pages/SignupTasteStepPage";
+import SignupProfilePage from "./pages/SignupProfilePage";
+import LikedPage from "./pages/LikedPage";
+import EditTastesPage from "./pages/EditTastesPage";
+
 
 
 import BottomNav from "./components/BottomNav";
-import "./App.css";
+
 
 function App() {
   const location = useLocation();
@@ -35,7 +39,6 @@ function App() {
         <Route path="/signup/tastes" element={<SignupTastesPage />} />
         <Route path="/discover" element={<DiscoveryPage />} />
         <Route path="/matches" element={<MatchesPage />} />
-        <Route path="/chats" element={<ChatListPage />} />
         <Route path="/chats/:id" element={<ChatRoomPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/users/:id" element={<UsersDetailsPage />} />
@@ -44,6 +47,11 @@ function App() {
 <Route path="/signup/tastes/show" element={<SignupTasteStepPage />} />
 <Route path="/signup/tastes/game" element={<SignupTasteStepPage />} />
 <Route path="/signup/tastes/artist" element={<SignupTasteStepPage />} />
+<Route path="/signup/profile" element={<SignupProfilePage />} />
+<Route path="/liked" element={<LikedPage />} />
+<Route path="/profile/tastes" element={<EditTastesPage />} />
+
+
 
       </Routes>
 

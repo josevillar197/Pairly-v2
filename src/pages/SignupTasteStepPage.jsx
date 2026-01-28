@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTasteItems } from "../services/api";
+import { getTasteItems, addUserTaste, getUserTastes } from "../services/api";
 import { useSignup } from "../context/SignupContext";
 
 const ORDER = ["movie", "show", "game", "artist"];
@@ -8,28 +8,73 @@ const ORDER = ["movie", "show", "game", "artist"];
 function SignupTasteStepPage() {
   const { category } = useParams();
   const navigate = useNavigate();
-  const { selectedTasteIds, toggleTaste, step, setStep } = useSignup();
+
+  const {
+    selectedTasteIds,
+    toggleTaste,
+    step,
+    setStep,
+    resetSignup,
+  } = useSignup();
 
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [existingTasteIds, setExistingTasteIds] = useState([]);
+
 
   useEffect(() => {
-    getTasteItems().then((data) => {
-      const all = data[0]?.tasteItems || [];
-      setItems(all.filter((t) => t.type === category));
+  setLoading(true);
+
+  Promise.all([
+    getTasteItems(),
+    getUserTastes(),
+  ])
+    .then(([allTastes, userTastes]) => {
+      setItems(allTastes.filter((t) => t.category === category));
+
+      const ids = userTastes.map(
+        (t) => t.tasteItem._id
+      );
+      setExistingTasteIds(ids);
+    })
+    .catch((err) => {
+      console.error("Taste load failed:", err);
+      setItems([]);
+    })
+    .finally(() => {
+      setLoading(false);
     });
-  }, [category]);
+}, [category]);
+
 
   const currentIndex = ORDER.indexOf(category);
   const isLast = currentIndex === ORDER.length - 1;
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     if (!isLast) {
       setStep(step + 1);
       navigate(`/signup/tastes/${ORDER[currentIndex + 1]}`);
-    } else {
-      navigate("/signup/tastes/finish");
+      return;
+    }
+
+    try {
+      const newTasteIds = selectedTasteIds.filter(
+  (id) => !existingTasteIds.includes(id)
+);
+
+for (const tasteId of newTasteIds) {
+  await addUserTaste(tasteId);
+}
+
+
+      resetSignup();
+      navigate("/discover");
+    } catch (err) {
+      alert("Failed to save tastes");
     }
   };
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div className="signup-page">
@@ -62,7 +107,7 @@ function SignupTasteStepPage() {
         </div>
 
         <button className="primary" onClick={handleContinue}>
-          Continue
+          {isLast ? "Finish" : "Continue"}
         </button>
       </div>
     </div>

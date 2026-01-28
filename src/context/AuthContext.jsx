@@ -16,28 +16,28 @@ function AuthProvider({ children }) {
     localStorage.removeItem("authToken");
   };
 
-  const authenticateUser = () => {
-    const token = localStorage.getItem("authToken");
+  const authenticateUser = async () => {
+  const token = localStorage.getItem("authToken");
 
-    if (!token) {
-      setIsLoggedIn(false);
-      setUser(null);
-      setIsLoading(false);
-      return;
-    }
+  if (!token) {
+    setIsLoggedIn(false);
+    setUser(null);
+    setIsLoading(false);
+    return;
+  }
 
-    verifyToken()
-      .then((payload) => {
-        setIsLoggedIn(true);
-        setUser(payload);
-        setIsLoading(false);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-        setUser(null);
-        setIsLoading(false);
-      });
-  };
+  try {
+    const payload = await verifyToken();
+    setIsLoggedIn(true);
+    setUser(payload);
+  } catch {
+    setIsLoggedIn(false);
+    setUser(null);
+  } finally {
+    setIsLoading(false);
+  }
+};
+
 
   const logOutUser = () => {
     removeToken();
@@ -48,6 +48,10 @@ function AuthProvider({ children }) {
   useEffect(() => {
     authenticateUser();
   }, []);
+  
+  const isProfileComplete =
+  user?.age && user?.bio && user?.image;
+
 
   return (
     <AuthContext.Provider
