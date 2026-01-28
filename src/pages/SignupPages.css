@@ -116,3 +116,71 @@ button.primary:disabled,
   opacity: 0.6;
   cursor: not-allowed;
 }
+/* =========================
+   SIGNUP PROFILE STEP FIX
+========================= */
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-input {
+  width: 100%;
+  padding: 0.9rem 0.75rem;
+  margin-bottom: 1rem;
+  background: #2a2a3d;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+}
+
+.profile-input::placeholder {
+  color: #9a9ab3;
+}
+
+.profile-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #5c5cff;
+}
+
+.profile-textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 0.9rem 0.75rem;
+  margin-bottom: 1rem;
+  background: #2a2a3d;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  resize: vertical;
+}
+
+.profile-textarea::placeholder {
+  color: #9a9ab3;
+}
+
+.profile-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #5c5cff;
+}
+
+.profile-button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 999px;
+  border: none;
+  background: #5c5cff;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.profile-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

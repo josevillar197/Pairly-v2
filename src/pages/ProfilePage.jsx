@@ -189,6 +189,7 @@ function ProfilePage() {
             setSaving(true);
 
             await updateUserProfile({
+              name: profile.name,
               age: profile.age,
               bio: profile.bio,
               image: profile.image,
