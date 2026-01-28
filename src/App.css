@@ -1,5 +1,3 @@
-
-
 * {
   box-sizing: border-box;
 }
@@ -20,7 +18,7 @@ body {
 
 .app {
   min-height: 100vh;
-  padding-bottom: 64px; /* space for bottom nav */
+  padding-bottom: 64px;
 }
 
 .page {
@@ -53,10 +51,6 @@ body {
   color: #ffffff;
   font-weight: 600;
 }
-
-/* =========================
-   DISCOVER / GENERIC CARDS
-========================= */
 
 .card-list {
   display: flex;
@@ -104,10 +98,6 @@ body {
   font-size: 0.9rem;
   color: #b3b3c6;
 }
-
-/* =========================
-   MATCHES (HORIZONTAL CARD)
-========================= */
 
 .match-card-horizontal {
   display: flex;
@@ -162,10 +152,6 @@ body {
   text-align: left;
   cursor: pointer;
 }
-
-/* =========================
-   USER DETAILS PAGE
-========================= */
 
 .user-details-page {
   display: flex;
@@ -230,10 +216,6 @@ body {
   font-weight: 600;
 }
 
-/* =========================
-   TASTES (PILLS)
-========================= */
-
 .user-tastes-section {
   width: 100%;
   margin-top: 16px;
@@ -277,10 +259,6 @@ body {
   color: #cfcaff;
 }
 
-/* =========================
-   MATCH ALERT
-========================= */
-
 .match-alert {
   position: fixed;
   top: 16px;
@@ -302,10 +280,6 @@ body {
   border-radius: 50%;
   object-fit: cover;
 }
-
-/* =========================
-   PROFILE PAGE (FORM LAYOUT)
-========================= */
 
 .profile-page {
   max-width: 900px;
@@ -483,7 +457,6 @@ body {
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* Dropdown container */
 .profile-menu-dropdown {
   position: absolute;
   right: 0;
@@ -500,7 +473,6 @@ body {
   z-index: 50;
 }
 
-/* Menu items */
 .profile-menu-dropdown button {
   width: 100%;
   background: none;
@@ -519,7 +491,6 @@ body {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* Destructive action */
 .profile-menu-dropdown .danger {
   color: #ff6b6b;
 }

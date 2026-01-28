@@ -32,8 +32,6 @@
   text-align: center;
 }
 
-/* ---------- Inputs ---------- */
-
 .signup-content input {
   width: 100%;
   padding: 0.9rem 0.75rem;
@@ -53,8 +51,6 @@
   outline: none;
   box-shadow: 0 0 0 2px #5c5cff;
 }
-
-/* ---------- Taste Grid ---------- */
 
 .taste-category {
   margin-bottom: 32px;
@@ -95,8 +91,6 @@
   border-color: #5c5cff;
 }
 
-/* ---------- Buttons ---------- */
-
 button.primary,
 .primary-button {
   margin-top: 1.5rem;
@@ -116,9 +110,6 @@ button.primary:disabled,
   opacity: 0.6;
   cursor: not-allowed;
 }
-/* =========================
-   SIGNUP PROFILE STEP FIX
-========================= */
 
 .profile-form {
   display: flex;

@@ -13,9 +13,6 @@ function DiscoveryPage() {
   // 🔔 match alert
   const [matchAlert, setMatchAlert] = useState(null);
 
-  // =========================
-  // LOAD DISCOVER USERS
-  // =========================
   useEffect(() => {
     Promise.all([
       getDiscoverUsers(),
@@ -42,9 +39,6 @@ function DiscoveryPage() {
       });
   }, []);
 
-  // =========================
-  // AUTO HIDE MATCH ALERT
-  // =========================
   useEffect(() => {
     if (!matchAlert) return;
 
@@ -55,14 +49,10 @@ function DiscoveryPage() {
     return () => clearTimeout(timer);
   }, [matchAlert]);
 
-  // =========================
-  // LIKE USER
-  // =========================
   const handleLike = async (user) => {
     try {
       const res = await likeUser(user._id);
 
-      // ✅ THIS NOW MATCHES YOUR BACKEND
       if (res.match === true) {
         setMatchAlert({
           name: user.name,
@@ -70,7 +60,6 @@ function DiscoveryPage() {
         });
       }
 
-      // remove user from discover
       setUsers((prev) =>
         prev.filter((u) => u._id !== user._id)
       );
@@ -92,7 +81,6 @@ function DiscoveryPage() {
     <div className="page discover-page">
       <h1>Discover</h1>
 
-      {/* 🔔 MATCH ALERT */}
       {matchAlert && (
         <div className="match-alert">
           <img src={matchAlert.image} alt="" />
