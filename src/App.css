@@ -1,6 +1,4 @@
-/* =========================
-   GLOBAL RESET
-========================= */
+
 
 * {
   box-sizing: border-box;
@@ -30,9 +28,6 @@ body {
   padding: 1.5rem;
 }
 
-/* =========================
-   BOTTOM NAV (RESTORED)
-========================= */
 
 .bottom-nav {
   position: fixed;
@@ -376,6 +371,23 @@ body {
   object-fit: cover;
   background: #2a2a3d;
 }
+.profile-avatar-input {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #9a9ab5;
+}
+
+.profile-avatar-input input {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #2a2a3d;
+  background: #1e1e2f;
+  color: white;
+}
+
 
 .profile-fields-column label {
   display: flex;
@@ -519,4 +531,64 @@ body {
   margin-top: 8px;
   color: #7dff9a;
   font-size: 0.9rem;
+}
+.taste-pill.editable {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.taste-remove-btn {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  font-size: 14px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.taste-remove-btn:focus {
+  outline: 2px solid #ff6b6b;
+  outline-offset: 2px;
+}
+.profile-edit-tastes-btn {
+  margin-bottom: 12px;
+  background: none;
+  border: 1px solid #2a2a3d;
+  color: #9a9ab5;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.edit-tastes-page {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.edit-tastes-page h1 {
+  margin-bottom: 32px;
+}
+.edit-tastes-page .taste-pill {
+  cursor: pointer;
+  border: 1px solid #2a2a3d;
+  background: rgba(255, 255, 255, 0.06);
+  color: #cfd0ff;
+  transition: all 0.15s ease;
+}
+
+.edit-tastes-page .taste-pill:hover {
+  background: rgba(108, 92, 255, 0.18);
+  border-color: #5c5cff;
+}
+
+.edit-tastes-page .taste-pill.selected {
+  background: #5c5cff;
+  color: white;
+  border-color: #5c5cff;
+}
+.edit-tastes-page .taste-category {
+  margin-bottom: 36px;
+}
+.edit-tastes-page .profile-save-btn {
+  margin-top: 32px;
 }

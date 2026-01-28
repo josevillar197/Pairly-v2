@@ -1,0 +1,121 @@
+body {
+  outline: 10px solid red !important;
+}
+
+
+.signup-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 1.5rem;
+  background: linear-gradient(180deg, #12121c 0%, #1e1e2f 100%);
+}
+
+.signup-content {
+  width: 100%;
+  max-width: 420px;
+}
+
+.signup-content h1 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.signup-subtitle {
+  color: #b3b3c6;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.signup-progress {
+  color: #9a9ab3;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* ---------- Inputs ---------- */
+
+.signup-content input {
+  width: 100%;
+  padding: 0.9rem 0.75rem;
+  margin-bottom: 1rem;
+  background: #2a2a3d;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+}
+
+.signup-content input::placeholder {
+  color: #9a9ab3;
+}
+
+.signup-content input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #5c5cff;
+}
+
+/* ---------- Taste Grid ---------- */
+
+.taste-category {
+  margin-bottom: 32px;
+}
+
+.taste-category-title {
+  color: white;
+  font-size: 1.1rem;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.taste-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+.taste {
+  padding: 0.6rem 0.9rem;
+  border-radius: 999px;
+  background: #2a2a3d;
+  color: #ccc;
+  border: 1px solid #2a2a3d;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.taste:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.taste.selected {
+  background: #5c5cff;
+  color: white;
+  border-color: #5c5cff;
+}
+
+/* ---------- Buttons ---------- */
+
+button.primary,
+.primary-button {
+  margin-top: 1.5rem;
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 999px;
+  border: none;
+  background: #5c5cff;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button.primary:disabled,
+.primary-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

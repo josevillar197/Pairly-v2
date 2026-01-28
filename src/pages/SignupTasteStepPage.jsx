@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getTasteItems, addUserTaste } from "../services/api";
+import { getTasteItems, addUserTaste, getUserTastes } from "../services/api";
 import { useSignup } from "../context/SignupContext";
 
 const ORDER = ["movie", "show", "game", "artist"];
@@ -19,25 +19,33 @@ function SignupTasteStepPage() {
 
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [existingTasteIds, setExistingTasteIds] = useState([]);
+
 
   useEffect(() => {
   setLoading(true);
 
-  getTasteItems()
-    .then((data) => {
-      console.log("RAW taste items from API:", data);
-      console.log("Current category param:", category);
+  Promise.all([
+    getTasteItems(),
+    getUserTastes(),
+  ])
+    .then(([allTastes, userTastes]) => {
+      setItems(allTastes.filter((t) => t.category === category));
 
-      setItems(data.filter((t) => t.category === category));
+      const ids = userTastes.map(
+        (t) => t.tasteItem._id
+      );
+      setExistingTasteIds(ids);
     })
     .catch((err) => {
-      console.error("Taste fetch failed:", err);
+      console.error("Taste load failed:", err);
       setItems([]);
     })
     .finally(() => {
       setLoading(false);
     });
 }, [category]);
+
 
   const currentIndex = ORDER.indexOf(category);
   const isLast = currentIndex === ORDER.length - 1;
@@ -50,9 +58,14 @@ function SignupTasteStepPage() {
     }
 
     try {
-      for (const tasteId of selectedTasteIds) {
-        await addUserTaste(tasteId);
-      }
+      const newTasteIds = selectedTasteIds.filter(
+  (id) => !existingTasteIds.includes(id)
+);
+
+for (const tasteId of newTasteIds) {
+  await addUserTaste(tasteId);
+}
+
 
       resetSignup();
       navigate("/discover");

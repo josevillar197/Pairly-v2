@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserTastes, updateUserProfile } from "../services/api";
-import { useContext } from "react";
+import {
+  getUserTastes,
+  updateUserProfile,
+  removeUserTaste
+} from "../services/api";
 import { AuthContext } from "../context/AuthContext";
-
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -15,24 +17,20 @@ function ProfilePage() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
 
+  useEffect(() => {
+    fetch("http://localhost:5005/api/users/profile", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("PROFILE API RESPONSE:", data);
+        setProfile(data);
+      });
 
-
-
-useEffect(() => {
-  fetch("http://localhost:5005/api/users/profile", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("PROFILE API RESPONSE:", data);
-      setProfile(data);
-    });
-
-  getUserTastes().then(setTastes);
-}, []);
-
+    getUserTastes().then(setTastes);
+  }, []);
 
   if (!profile) {
     return <div className="page">Loading profile…</div>;
@@ -41,13 +39,12 @@ useEffect(() => {
   const groupedTastes = tastes.reduce((acc, t) => {
     const category = t.tasteItem.category;
     if (!acc[category]) acc[category] = [];
-    acc[category].push(t.tasteItem.name);
+    acc[category].push(t);
     return acc;
   }, {});
 
   return (
     <div className="page profile-page">
-      {/* HEADER */}
       <div className="profile-top-bar">
         <h1>Profile</h1>
 
@@ -78,7 +75,6 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* PROFILE FORM */}
       <div className="profile-form-layout">
         <div className="profile-avatar-column">
           <img
@@ -86,6 +82,18 @@ useEffect(() => {
             alt={profile.name}
             className="profile-avatar"
           />
+
+          <label className="profile-avatar-input">
+            Avatar image URL
+            <input
+              type="text"
+              value={profile.image || ""}
+              onChange={(e) =>
+                setProfile({ ...profile, image: e.target.value })
+              }
+              placeholder="https://example.com/photo.jpg"
+            />
+          </label>
         </div>
 
         <div className="profile-fields-column">
@@ -117,7 +125,6 @@ useEffect(() => {
         </div>
       </div>
 
-      {/* BIO */}
       <label className="profile-bio-label">
         Bio
         <textarea
@@ -128,9 +135,17 @@ useEffect(() => {
         />
       </label>
 
-      {/* TASTES */}
       <div className="profile-tastes">
         <h2>Your tastes</h2>
+
+        
+       <button
+  className="profile-edit-tastes-btn"
+  onClick={() => navigate("/profile/tastes")}
+>
+  Edit tastes
+</button>
+
 
         {Object.entries(groupedTastes).map(([cat, items]) => (
           <div key={cat} className="taste-category">
@@ -139,9 +154,26 @@ useEffect(() => {
             </div>
 
             <div className="taste-pill-list">
-              {items.map((t, i) => (
-                <span key={i} className="taste-pill">
-                  {t}
+              {items.map((t) => (
+                <span
+                  key={t._id}
+                  className="taste-pill editable"
+                >
+                  {t.tasteItem.name}
+
+                  <button
+                    type="button"
+                    className="taste-remove-btn"
+                    aria-label={`Remove ${t.tasteItem.name}`}
+                    onClick={() => {
+                      removeUserTaste(t._id);
+                      setTastes((prev) =>
+                        prev.filter((ut) => ut._id !== t._id)
+                      );
+                    }}
+                  >
+                    ×
+                  </button>
                 </span>
               ))}
             </div>
@@ -149,38 +181,35 @@ useEffect(() => {
         ))}
       </div>
 
-     <button
-  className="profile-save-btn"
-  disabled={saving}
-  onClick={async () => {
-    try {
-      setSaving(true);
+      <button
+        className="profile-save-btn"
+        disabled={saving}
+        onClick={async () => {
+          try {
+            setSaving(true);
 
-      await updateUserProfile({
-        age: profile.age,
-        bio: profile.bio,
-        image: profile.image,
-      });
-      setSaved(true);
-setTimeout(() => setSaved(false), 2000);
+            await updateUserProfile({
+              age: profile.age,
+              bio: profile.bio,
+              image: profile.image,
+            });
 
+            setSaved(true);
+            setTimeout(() => setSaved(false), 2000);
 
-      await authenticateUser();
+            await authenticateUser();
+          } catch (err) {
+            console.error("PROFILE SAVE ERROR:", err);
+            alert("Failed to save profile");
+          } finally {
+            setSaving(false);
+          }
+        }}
+      >
+        {saving ? "Saving..." : "Save changes"}
+      </button>
 
-    } catch (err) {
-      console.error("PROFILE SAVE ERROR:", err);
-      alert("Failed to save profile");
-    } finally {
-      setSaving(false);
-    }
-  }}
-  
->
-  {saving ? "Saving..." : "Save changes"}
-</button>
-{saved && <p className="profile-saved">✓ Saved</p>}
-
-
+      {saved && <p className="profile-saved">✓ Saved</p>}
     </div>
   );
 }

@@ -15,11 +15,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import SignupTasteStepPage from "./pages/SignupTasteStepPage";
 import SignupProfilePage from "./pages/SignupProfilePage";
 import LikedPage from "./pages/LikedPage";
+import EditTastesPage from "./pages/EditTastesPage";
 
 
 
 import BottomNav from "./components/BottomNav";
-import "./App.css";
+
 
 function App() {
   const location = useLocation();
@@ -48,6 +49,7 @@ function App() {
 <Route path="/signup/tastes/artist" element={<SignupTasteStepPage />} />
 <Route path="/signup/profile" element={<SignupProfilePage />} />
 <Route path="/liked" element={<LikedPage />} />
+<Route path="/profile/tastes" element={<EditTastesPage />} />
 
 
 
