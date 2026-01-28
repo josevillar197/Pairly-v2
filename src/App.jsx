@@ -44,12 +44,12 @@ function App() {
         <Route path="/users/:id" element={<UsersDetailsPage />} />
         <Route path="*" element={<NotFoundPage />} />
         <Route path="/signup/tastes/movie" element={<SignupTasteStepPage />} />
-<Route path="/signup/tastes/show" element={<SignupTasteStepPage />} />
-<Route path="/signup/tastes/game" element={<SignupTasteStepPage />} />
-<Route path="/signup/tastes/artist" element={<SignupTasteStepPage />} />
-<Route path="/signup/profile" element={<SignupProfilePage />} />
-<Route path="/liked" element={<LikedPage />} />
-<Route path="/profile/tastes" element={<EditTastesPage />} />
+        <Route path="/signup/tastes/show" element={<SignupTasteStepPage />} />
+        <Route path="/signup/tastes/game" element={<SignupTasteStepPage />} />
+        <Route path="/signup/tastes/artist" element={<SignupTasteStepPage />} />
+        <Route path="/signup/profile" element={<SignupProfilePage />} />
+        <Route path="/liked" element={<LikedPage />} />
+        <Route path="/profile/tastes" element={<EditTastesPage />} />
 
 
 

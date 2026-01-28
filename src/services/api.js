@@ -1,9 +1,5 @@
 const API_URL = "http://localhost:5005/api";
 
-/* =========================
-   TOKEN HELPERS
-========================= */
-
 function getAuthToken() {
   return localStorage.getItem("authToken");
 }
@@ -24,10 +20,6 @@ function authFetch(url, options = {}) {
     headers,
   });
 }
-
-/* =========================
-   AUTH
-========================= */
 
 export function login(email, password) {
   return fetch(`${API_URL}/auth/login`, {
@@ -70,10 +62,6 @@ export function verifyToken() {
     return res.json();
   });
 }
-
-/* =========================
-   TASTES
-========================= */
 
 export function getTasteItems() {
   return fetch(`${API_URL}/taste-items`).then((res) => {
