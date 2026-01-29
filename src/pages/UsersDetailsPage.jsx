@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { API_URL } from "../services/api";
 
 const CATEGORY_EMOJI = {
   movie: "🎬",
