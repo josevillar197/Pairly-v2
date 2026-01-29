@@ -29,7 +29,7 @@ function SignupProfilePage() {
         image,
       });
 
-      await authenticateUser();
+      
 navigate("/discover");
 
     } catch (err) {
