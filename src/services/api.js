@@ -1,4 +1,6 @@
-const API_URL = import.meta.env.VITE_URL || "http://localhost:5005/api";
+
+
+export const API_URL = import.meta.env.VITE_URL || "http://localhost:5005/api";
 
 function getAuthToken() {
   return localStorage.getItem("authToken");

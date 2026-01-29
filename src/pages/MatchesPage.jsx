@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMyMatches } from "../services/api";
+import { API_URL } from "../services/api";
 
 function MatchesPage() {
   const [matches, setMatches] = useState([]);
@@ -19,7 +20,7 @@ function MatchesPage() {
 
   const handleUnmatch = async (userId) => {
     try {
-      await fetch(`http://localhost:5005/api/user-likes/${userId}`, {
+      await fetch(`${API_URL}/user-likes/${userId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("authToken")}`,

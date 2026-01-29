@@ -22,19 +22,19 @@ function UsersDetailsPage() {
     const token = localStorage.getItem("authToken");
 
     Promise.all([
-      fetch(`http://localhost:5005/api/users/${id}`, {
+      fetch(`${API_URL}/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
 
-      fetch(`http://localhost:5005/api/users/${id}/tastes`, {
+      fetch(`${API_URL}/users/${id}/tastes`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
 
-      fetch(`http://localhost:5005/api/user-tastes`, {
+      fetch(`${API_URL}/user-tastes`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
 
-      fetch(`http://localhost:5005/api/matches/me`, {
+      fetch(`${API_URL}/matches/me`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
     ])

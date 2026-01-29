@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserTastes, updateUserProfile, removeUserTaste } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { API_URL } from "../services/api";
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function ProfilePage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5005/api/users/profile", {
+    fetch(`${API_URL}/users/profile`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },

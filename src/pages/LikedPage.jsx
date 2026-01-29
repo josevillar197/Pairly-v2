@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../services/api";
+
 
 function LikedPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5005/api/user-likes/sent/me", {
+    fetch(`${API_URL}/users/profileapi/user-likes/sent/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("authToken")}`,
       },
@@ -14,7 +16,7 @@ function LikedPage() {
       .then((likes) => {
         return Promise.all(
           likes.map((l) =>
-            fetch(`http://localhost:5005/api/users/${l.toUser}`, {
+            fetch(`${API_URL}/users/${l.toUser}`, {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("authToken")}`,
               },
@@ -29,7 +31,7 @@ function LikedPage() {
   const handleDislike = async (userId) => {
     try {
       await fetch(
-        `http://localhost:5005/api/user-likes/${userId}`,
+        `${API_URL}/user-likes/${userId}`,
         {
           method: "DELETE",
           headers: {
