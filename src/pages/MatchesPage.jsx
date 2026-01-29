@@ -19,12 +19,16 @@ function MatchesPage() {
 
   const handleUnmatch = async (userId) => {
     try {
-      await fetch(`http://localhost:5005/api/user-likes/${userId}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-        },
-      });
+     await fetch(
+  `${import.meta.env.VITE_URL || "http://localhost:5005/api"}/user-likes/${userId}`,
+  {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  }
+);
+
 
       setMatches((prev) =>
         prev.filter((m) => m.otherUser._id !== userId)

@@ -1,42 +1,32 @@
 import { useEffect, useState } from "react";
+import { getSentLikes } from "../services/api";
+
+const API_BASE = import.meta.env.VITE_URL || "http://localhost:5005/api";
 
 function LikedPage() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5005/api/user-likes/sent/me", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((likes) => {
-        return Promise.all(
-          likes.map((l) =>
-            fetch(`http://localhost:5005/api/users/${l.toUser}`, {
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-              },
-            }).then((r) => r.json())
-          )
-        );
+    getSentLikes()
+      .then((data) => {
+        setUsers(data);
+        setLoading(false);
       })
-      .then(setUsers)
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        console.error("LIKES LOAD ERROR:", err);
+        setLoading(false);
+      });
   }, []);
 
   const handleDislike = async (userId) => {
     try {
-      await fetch(
-        `http://localhost:5005/api/user-likes/${userId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-          },
-        }
-      );
+      await fetch(`${API_BASE}/user-likes/${userId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+        },
+      });
 
       setUsers((prev) => prev.filter((u) => u._id !== userId));
     } catch (err) {

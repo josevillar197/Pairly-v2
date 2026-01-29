@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUserTastes, updateUserProfile, removeUserTaste } from "../services/api";
 import { AuthContext } from "../context/AuthContext";
+import { updateUserProfile } from "../services/api";
 
 function ProfilePage() {
   const navigate = useNavigate();
@@ -14,19 +15,15 @@ function ProfilePage() {
   const [saved, setSaved] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5005/api/users/profile", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("authToken")}`,
-      },
+  updateUserProfile({})
+    .then((data) => {
+      setProfile(data);
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("PROFILE API RESPONSE:", data);
-        setProfile(data);
-      });
+    .catch((err) => {
+      console.error("PROFILE LOAD ERROR:", err);
+    });
+}, []);
 
-    getUserTastes().then(setTastes);
-  }, []);
 
   if (!profile) {
     return <div className="page">Loading profile…</div>;

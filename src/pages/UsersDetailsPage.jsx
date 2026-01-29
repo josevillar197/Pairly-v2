@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { getUserTastes } from "../services/api";
+
+const API_BASE = import.meta.env.VITE_URL || "http://localhost:5005/api";
 
 const CATEGORY_EMOJI = {
   movie: "🎬",
@@ -22,19 +25,19 @@ function UsersDetailsPage() {
     const token = localStorage.getItem("authToken");
 
     Promise.all([
-      fetch(`http://localhost:5005/api/users/${id}`, {
+      fetch(`${API_BASE}/users/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
 
-      fetch(`http://localhost:5005/api/users/${id}/tastes`, {
+      fetch(`${API_BASE}/users/${id}/tastes`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
 
-      fetch(`http://localhost:5005/api/user-tastes`, {
+      fetch(`${API_BASE}/user-tastes`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
 
-      fetch(`http://localhost:5005/api/matches/me`, {
+      fetch(`${API_BASE}/matches/me`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((r) => r.json()),
     ])
